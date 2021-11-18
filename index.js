@@ -12,6 +12,8 @@ graphql Scalar datatypes: (They store a single value)
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
     type Query {
+        greetings(name: String): String!
+        add(num1: Float!, num2: Float!): Float!
         me: User!
         post: Post!
     }
@@ -30,6 +32,13 @@ const schema = buildSchema(`
 
 // The root provides a resolver function for each API endpoint
 const rootValue = {
+    greetings: ({ name })=>{
+        if(name) return `Hello ${name}!`;
+        return 'Hello!';
+    },
+    add: ({ num1, num2 })=>{
+        return Math.floor(num1 + num2);
+    },
     me: ()=>{
         return {
             name: "Abenezer",
